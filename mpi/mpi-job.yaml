@@ -1,0 +1,33 @@
+apiVersion: kubeflow.org/v2beta1
+kind: MPIJob
+metadata:
+  name: mpi-ucx-example
+  namespace: default
+spec:
+  runPolicy:
+    cleanPodPolicy: Running
+  mpiReplicaSpecs:
+    Launcher:
+      replicas: 1
+      template:
+        spec:
+          containers:
+            - command:
+                - mpirun
+                - -mca
+                - pml
+                - ucx
+                - /opt/opencbe/allreduce
+              image: opencbe/mpi-ucx-example:0.1
+              name: mpi-ucx-example
+    Worker:
+      replicas: 1
+      template:
+        spec:
+          containers:
+            - image: opencbe/mpi-ucx-example:0.1
+              name: mpi-ucx-example
+              resources:
+                limits:
+                  cpu: 2
+  slotsPerWorker: 2
