@@ -1,8 +1,8 @@
 EXECS=allreduce
 MPICC?=mpicc
 
-IMG_VER?=0.1
-IMG?=opencbe/mpi-ucx-example:${IMG_VER}
+IMG_VER?=v0.1
+IMG?=openbce/mpi-example:${IMG_VER}
 
 all: ${EXECS}
 
